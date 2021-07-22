@@ -1,17 +1,26 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
+#include <string>
+
 #include "funcs.hpp"
+
+using namespace std;
 
 int main(int argc, char *argv[])
 {
-	check_args(3, argv[1]);
+	check_args(argv[1]);
 
 	long id = strtol(argv[2], NULL, 10);
+	string command = argv[1];
+
+	for (int i = 0; i < argc; i++)
+		std::cout << argv[i] << std::endl;
 
 	/* CREATE A TASK */
-	if (argv[1] == "add")
+	if (command == "add")
 	{
+		std::cout << argv[1] << std::endl;
 		add(argv[1]);
 		return 0;
 	}

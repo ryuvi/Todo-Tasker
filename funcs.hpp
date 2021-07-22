@@ -3,20 +3,22 @@
 #include <fstream>
 #include <string>
 
+using namespace std;
+
 void print_help()
 {
     std::cout << "HELP!" << std::endl;
 }
 
-int check_args(int qttCommands, char *arg)
+int check_args(char *arg)
 {
-    std::string commands[4] = {
+    string commands[4] = {
         "add",
         "remove",
         "update",
         "show"};
 
-    for (int i = 0; i < qttCommands; i++)
+    for (int i = 0; i < 4; i++)
     {
         if (commands[i] != arg)
         {
