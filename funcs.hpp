@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <string>
 
 void print_help()
 {
@@ -8,7 +10,7 @@ void print_help()
 
 int check_args(int qttCommands, char *arg)
 {
-    char *commands[4] = {
+    std::string commands[4] = {
         "add",
         "remove",
         "update",
@@ -21,22 +23,46 @@ int check_args(int qttCommands, char *arg)
             print_help();
             return 0;
         }
+        else
+        {
+            break;
+        }
     }
-}
-
-int add(char *task)
-{
-    std::vector<char *> tasks;
-
-    /* TODO: grab old tasks */
-
-    /* ADDS TO VECTOR */
-    tasks.push_back(task);
 
     return 0;
 }
 
-int edit(int id, char *option)
+int add(char *task)
+{
+    int i;
+    std::string line;
+
+    /* GRAB OLD TASKS */
+    std::vector<std::string> tasks;
+
+    std::ifstream InMyDB("DB.txt");
+
+    while (getline(InMyDB, line))
+        tasks.push_back(line);
+
+    InMyDB.close();
+
+    /* ADD NEW TASK */
+    tasks.push_back(task);
+
+    std::ofstream OutMyDB("DB.txt");
+
+    OutMyDB.clear();
+
+    for (i = 0; i < tasks.size(); i++)
+        OutMyDB << tasks[i];
+
+    OutMyDB.close();
+
+    return 0;
+}
+
+int conclude(long id, char *option)
 {
     /* TODO:
      *   - grab the task by ID
@@ -46,7 +72,7 @@ int edit(int id, char *option)
     return 0;
 }
 
-int edit(int id, char *task)
+int edit(long id, char *task)
 {
     char *title, description;
 
@@ -65,11 +91,11 @@ int edit(int id, char *task)
     return 0;
 }
 
-int remove(int id)
+int remove(long id)
 {
     std::vector<char *> tasks;
 
-    tasks.erase(tasks.begin() + (id - 1));
+    tasks.erase(tasks.begin() + ((int)id - 1));
 
     return 0;
 }
